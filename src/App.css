@@ -1,0 +1,27 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header {
+  height: 170px;
+}
+
+.monkes-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Add more global styles as needed */
+
