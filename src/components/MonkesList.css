@@ -29,13 +29,24 @@ table {
 
 th, td { 
     border: 1px solid #3D3D3D; 
-    padding: 8px; 
     text-align: left;
     vertical-align: top;
     background: #2D2D2D;
     color: #FFFFFF;
     font-size: 16px;
     font-weight: 400;
+}
+
+/* Remove padding from all cells except specific ones */
+td {
+    padding: 0;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+/* Add padding back to cells that need it */
+td:not(:nth-child(2)) {
+    padding: 8px;
 }
 
 th { 
@@ -45,11 +56,7 @@ th {
     font-weight: 600;
     z-index: 1;
     font-size: 18px;
-}
-
-td {
-    overflow: hidden;
-    word-wrap: break-word;
+    padding: 8px;
 }
 
 tr { 
@@ -60,11 +67,9 @@ thead tr {
     height: 40px;
 }
 
+/* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 50px; }
-th:nth-child(2), td:nth-child(2) { 
-    width: 180px;
-    padding: 0;
-}
+th:nth-child(2), td:nth-child(2) { width: 180px; }
 th:nth-child(3), td:nth-child(3) { width: 60px; } 
 th:nth-child(4), td:nth-child(4) { width: 200px; } 
 th:nth-child(5), td:nth-child(5) { width: 60px; }
