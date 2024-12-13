@@ -1,38 +1,43 @@
-.monkes-list {
+.monkes-container {
   padding: 20px;
-  max-width: 1800px;
-  margin: 0 auto;
-}
-
-.search-container {
-  margin-bottom: 20px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background: #2a2a2a;
-  padding: 15px;
-  border-radius: 4px;
+  background-color: #1a1a1a;
+  min-height: 100vh;
 }
 
 .monkes-table {
   width: 100%;
   border-collapse: collapse;
   background: #1a1a1a;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.monkes-table th,
-.monkes-table td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #333;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .monkes-table th {
   background: #2a2a2a;
+  padding: 12px;
+  text-align: left;
   font-weight: normal;
-  color: #fff;
+  border-bottom: 1px solid #333;
+}
+
+.monkes-table td {
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  vertical-align: top;
+}
+
+.monke-row:nth-child(even) {
+  background: #222;
+}
+
+.id-cell {
+  font-family: monospace;
+  font-size: 14px;
+  text-align: center;
+}
+
+.image-cell {
+  width: 100px;
 }
 
 .monke-image {
@@ -44,52 +49,59 @@
 }
 
 .color-cell {
-  text-align: center;
+  width: 30px;
+  padding: 12px 20px !important;
 }
 
 .color-bar {
   width: 30px;
   height: 120px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   border-radius: 4px;
   overflow: hidden;
 }
 
-.color-count {
-  font-family: monospace;
-  font-size: 16px;
-  margin-bottom: 4px;
-  color: #fff;
+.color-bar.loading {
+  background: #2a2a2a;
 }
 
-.traits-list {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.color-segment {
+  flex: 1;
+  width: 100%;
 }
 
-.trait-item {
+.traits-cell {
+  min-width: 200px;
+}
+
+.trait {
   background: #2a2a2a;
   padding: 6px 8px;
+  margin-bottom: 4px;
   border-radius: 4px;
   font-family: monospace;
   font-size: 14px;
 }
 
-.trait-item.rare {
-  color: #ff4444;
+.trait:last-child {
+  margin-bottom: 0;
 }
 
-.script-pubkey {
+.rank-cell,
+.inscription-cell,
+.block-cell {
   font-family: monospace;
   font-size: 14px;
-  white-space: pre-wrap;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.script-cell {
+  font-family: monospace;
+  font-size: 14px;
   word-break: break-all;
-  background: #2a2a2a;
-  padding: 8px;
-  border-radius: 4px;
+  white-space: pre-wrap;
 }
 
 .loading {
@@ -98,14 +110,9 @@
   color: #666;
 }
 
-@media (max-width: 768px) {
-  .search-container {
-    flex-direction: column;
-  }
-
-  .monke-image {
-    width: 80px;
-    height: 80px;
-  }
+.error {
+  text-align: center;
+  padding: 40px;
+  color: #ff4444;
 }
 
