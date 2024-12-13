@@ -101,4 +101,3 @@ const MonkesList: React.FC = () => {
 }
 
 export default MonkesList
-
