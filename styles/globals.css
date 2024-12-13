@@ -8,6 +8,11 @@ body, html {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
 .app {
   min-height: 100vh;
   display: flex;
@@ -105,6 +110,10 @@ td {
   padding: 12px;
   border-bottom: 1px solid #333;
   background: #1a1a1a;
+}
+
+tr:nth-child(even) td {
+  background: #222;
 }
 
 /* Column widths */
@@ -251,3 +260,12 @@ th:nth-child(8), td:nth-child(8) { width: auto; } /* SCRIPT PUBKEY */
     height: 80px;
   }
 }
+
+// 确保暗色主题样式正确
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #1a1a1a;
+    --text-color: #ffffff;
+  }
+}
+
