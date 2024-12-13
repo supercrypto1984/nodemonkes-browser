@@ -1,14 +1,16 @@
-import React from 'react'
-import MonkesList from './components/MonkesList'
+import React from 'react';
+import Header from './components/Header';
+import MonkesList from './components/MonkesList';
+import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="app">
-      <h1>Node Monkes Browser</h1>
+      <Header />
       <MonkesList />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
