@@ -7,7 +7,9 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <Header />
-      <MonkesList />
+      <div className="content-container">
+        <MonkesList />
+      </div>
     </div>
   );
 };
