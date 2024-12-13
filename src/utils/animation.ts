@@ -41,9 +41,34 @@ enum AnimationState {
   ENTRANCE = 'entrance'
 }
 
+interface DrawFrameOptions {
+  xOffset?: number;
+  nodRotation?: number;
+}
+
+function drawFrame(context: CanvasRenderingContext2D, frameIndex: number, options: DrawFrameOptions = {}): void {
+  const { xOffset = 0, nodRotation = 0 } = options;
+  
+  const width = PARAMS.baseSize * PARAMS.hdScale;
+  const height = PARAMS.baseSize * PARAMS.hdScale;
+  
+  const progress = frameIndex / PARAMS.frameCount * Math.PI * 2;
+  const baseRotation = Math.sin(progress) * PARAMS.rotationRange;
+  
+  context.save();
+  context.translate(xOffset + width/2, height/2);
+  context.rotate(baseRotation + nodRotation);
+  context.translate(-width/2, -height/2);
+  
+  context.fillStyle = '#666';
+  context.fillRect(0, 0, width, height);
+  
+  context.restore();
+}
+
 export function initializeAnimation(canvas: HTMLCanvasElement): void {
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
+  const context = canvas.getContext('2d');
+  if (!context) {
     console.error('Could not get canvas context');
     return;
   }
@@ -52,13 +77,13 @@ export function initializeAnimation(canvas: HTMLCanvasElement): void {
   let stateStartTime = Date.now();
   let frame = 0;
 
-  ctx.imageSmoothingEnabled = false;
+  context.imageSmoothingEnabled = false;
 
-  function animate() {
+  function animate(): void {
     const currentTime = Date.now();
     const stateTime = currentTime - stateStartTime;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     switch (currentState) {
       case AnimationState.DISPLAY:
@@ -66,40 +91,46 @@ export function initializeAnimation(canvas: HTMLCanvasElement): void {
           currentState = AnimationState.NOD;
           stateStartTime = currentTime;
         }
-        drawFrame(ctx, frame);
+        drawFrame(context, frame);
         break;
 
       case AnimationState.NOD:
-        const nodProgress = stateTime / PARAMS.nodDuration;
-        if (nodProgress >= 1) {
-          currentState = AnimationState.EXIT;
-          stateStartTime = currentTime;
+        {
+          const nodProgress = stateTime / PARAMS.nodDuration;
+          if (nodProgress >= 1) {
+            currentState = AnimationState.EXIT;
+            stateStartTime = currentTime;
+          }
+          drawFrame(context, frame, {
+            nodRotation: Math.sin(nodProgress * Math.PI * 2) * 0.15
+          });
         }
-        drawFrame(ctx, frame, {
-          nodRotation: Math.sin(nodProgress * Math.PI * 2) * 0.15
-        });
         break;
 
       case AnimationState.EXIT:
-        const exitProgress = stateTime / PARAMS.exitDuration;
-        if (exitProgress >= 1) {
-          currentState = AnimationState.ENTRANCE;
-          stateStartTime = currentTime;
+        {
+          const exitProgress = stateTime / PARAMS.exitDuration;
+          if (exitProgress >= 1) {
+            currentState = AnimationState.ENTRANCE;
+            stateStartTime = currentTime;
+          }
+          drawFrame(context, frame, {
+            xOffset: Math.min(canvas.width, exitProgress * canvas.width * 2)
+          });
         }
-        drawFrame(ctx, frame, {
-          xOffset: Math.min(canvas.width, exitProgress * canvas.width * 2)
-        });
         break;
 
       case AnimationState.ENTRANCE:
-        const entranceProgress = stateTime / PARAMS.entranceDuration;
-        if (entranceProgress >= 1) {
-          currentState = AnimationState.DISPLAY;
-          stateStartTime = currentTime;
+        {
+          const entranceProgress = stateTime / PARAMS.entranceDuration;
+          if (entranceProgress >= 1) {
+            currentState = AnimationState.DISPLAY;
+            stateStartTime = currentTime;
+          }
+          drawFrame(context, frame, {
+            xOffset: (1 - entranceProgress) * -canvas.width
+          });
         }
-        drawFrame(ctx, frame, {
-          xOffset: (1 - entranceProgress) * -canvas.width
-        });
         break;
     }
 
@@ -107,37 +138,6 @@ export function initializeAnimation(canvas: HTMLCanvasElement): void {
     requestAnimationFrame(animate);
   }
 
-  function drawFrame(ctx: CanvasRenderingContext2D, frameIndex: number, options: {
-    xOffset?: number;
-    nodRotation?: number;
-  } = {}) {
-    const { xOffset = 0, nodRotation = 0 } = options;
-    
-    // Calculate base dimensions
-    const width = PARAMS.baseSize * PARAMS.hdScale;
-    const height = PARAMS.baseSize * PARAMS.hdScale;
-    
-    // Calculate animation progress
-    const progress = frameIndex / PARAMS.frameCount * Math.PI * 2;
-    const baseRotation = Math.sin(progress) * PARAMS.rotationRange;
-    
-    // Save context state
-    ctx.save();
-    
-    // Apply transformations
-    ctx.translate(xOffset + width/2, height/2);
-    ctx.rotate(baseRotation + nodRotation);
-    ctx.translate(-width/2, -height/2);
-    
-    // Draw placeholder rectangle for testing
-    ctx.fillStyle = '#666';
-    ctx.fillRect(0, 0, width, height);
-    
-    // Restore context state
-    ctx.restore();
-  }
-
-  // Start the animation
   animate();
 }
 
