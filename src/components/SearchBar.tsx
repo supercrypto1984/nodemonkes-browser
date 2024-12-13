@@ -14,11 +14,18 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
     onSearch(searchTerm, bodyType);
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="search-container">
       <select 
-        value={bodyType} 
+        value={bodyType}
         onChange={(e) => setBodyType(e.target.value)}
+        aria-label="Filter by body type"
       >
         <option value="all">All Monkes</option>
         {bodyTypes.map(type => (
@@ -29,8 +36,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyUp={handleKeyPress}
         placeholder="Search ID or Inscription..."
-        onKeyUp={(e) => e.key === 'Enter' && handleSearch()}
+        aria-label="Search by ID or Inscription"
       />
       <button onClick={handleSearch}>Search</button>
     </div>
