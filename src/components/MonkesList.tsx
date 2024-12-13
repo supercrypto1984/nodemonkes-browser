@@ -1,56 +1,69 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { fetchMonkes, Monke } from '../utils/api';
+import MonkeItem from './MonkeItem';
+import SearchBar from './SearchBar';
+import Pagination from './Pagination';
+import './MonkesList.css';
 
-interface Monke {
-  id: number
-  attributes: {
-    Body: string
-    Eyes: string
-    Earring: string
-    Head: string
-    Count: number
-    [key: string]: any
-  }
-  rank?: number
-  inscription?: number
-  block?: number
-  scriptPubkey?: string
-}
+const ITEMS_PER_PAGE = 10;
 
 const MonkesList: React.FC = () => {
-  const [monkes, setMonkes] = useState<Monke[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [monkes, setMonkes] = useState<Monke[]>([]);
+  const [filteredMonkes, setFilteredMonkes] = useState<Monke[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchMonkes = async () => {
+    const loadMonkes = async () => {
       try {
-        const response = await fetch('https://nodemonkes.4everland.store/transformed_metadata.json')
-        if (!response.ok) {
-          throw new Error('Failed to fetch monkes data')
-        }
-        const data = await response.json()
-        setMonkes(data.nodemonkes || data)
+        const data = await fetchMonkes();
+        setMonkes(data);
+        setFilteredMonkes(data);
+        setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load monkes')
-      } finally {
-        setLoading(false)
+        setError('Failed to load monkes. Please try again.');
+        setLoading(false);
       }
+    };
+
+    loadMonkes();
+  }, []);
+
+  const handleSearch = (searchTerm: string, bodyType: string) => {
+    let filtered = monkes;
+
+    if (searchTerm) {
+      const searchNumber = parseInt(searchTerm);
+      filtered = monkes.filter(monke => 
+        monke.id === searchNumber || monke.inscription === searchNumber
+      );
     }
 
-    fetchMonkes()
-  }, [])
+    if (bodyType !== 'all') {
+      filtered = filtered.filter(monke => 
+        (monke.attributes?.Body || monke.body) === bodyType
+      );
+    }
 
-  if (loading) {
-    return <div>Loading Node Monkes...</div>
-  }
+    setFilteredMonkes(filtered);
+    setCurrentPage(1);
+  };
 
-  if (error) {
-    return <div>Error: {error}</div>
-  }
+  if (loading) return <div>Loading Node Monkes...</div>;
+  if (error) return <div>{error}</div>;
+
+  const pageCount = Math.ceil(filteredMonkes.length / ITEMS_PER_PAGE);
+  const currentMonkes = filteredMonkes.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
-    <div className="monkes-container">
-      <table className="monkes-table">
+    <div className="monkes-list">
+      <h2>All Monkes</h2>
+      <SearchBar onSearch={handleSearch} bodyTypes={[...new Set(monkes.map(m => m.attributes?.Body || m.body))]} />
+      <table>
         <thead>
           <tr>
             <th>#</th>
@@ -64,41 +77,19 @@ const MonkesList: React.FC = () => {
           </tr>
         </thead>
         <tbody>
-          {monkes.map((monke) => (
-            <tr key={monke.id}>
-              <td>{monke.id}</td>
-              <td>
-                <img 
-                  src={`https://raw.githubusercontent.com/supercrypto1984/nodemonkes-gallery/main/images/${monke.id}.png`}
-                  alt={`Node Monke #${monke.id}`}
-                  className="monke-image"
-                />
-              </td>
-              <td>
-                {/* 这里需要实现颜色分析 */}
-                <div className="color-analysis"></div>
-              </td>
-              <td>
-                {Object.entries(monke.attributes)
-                  .filter(([key]) => !key.endsWith('Count') && key !== 'Count')
-                  .map(([key, value]) => (
-                    <div key={key} className="trait">
-                      {key}: {value} ({((monke.attributes[`${key}Count`] as number) / 10000 * 100).toFixed(1)}%)
-                    </div>
-                  ))}
-                <div className="trait">Count: {monke.attributes.Count}</div>
-              </td>
-              <td>{monke.rank || '-'}</td>
-              <td>{monke.inscription || '-'}</td>
-              <td>{monke.block || '-'}</td>
-              <td>{monke.scriptPubkey || '-'}</td>
-            </tr>
+          {currentMonkes.map(monke => (
+            <MonkeItem key={monke.id} monke={monke} />
           ))}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={pageCount}
+        onPageChange={setCurrentPage}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default MonkesList
+export default MonkesList;
 
