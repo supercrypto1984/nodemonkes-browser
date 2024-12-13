@@ -39,7 +39,7 @@ const Header: React.FC = () => {
       willReadFrequently: true,
       alpha: true
     });
-    if (!ctx) return;
+    if (!ctx || !container) return;
 
     ctx.imageSmoothingEnabled = false;
 
@@ -58,6 +58,7 @@ const Header: React.FC = () => {
       willReadFrequently: true,
       alpha: true
     });
+    if (!offscreenCtx) return;
 
     function calculateOptimalSize(containerHeight: number) {
       const scale = Math.floor(containerHeight / PARAMS.baseSize);
@@ -295,9 +296,8 @@ const Header: React.FC = () => {
         return;
       }
 
-      const size = calculateOptimalSize(container.clientHeight);
-      const containerWidth = container.clientWidth;
-      const movementWidth = containerWidth - size.width;
+      const size = calculateOptimalSize(container?.clientHeight ?? 168);
+      const containerWidth = container?.clientWidth ?? window.innerWidth;
 
       switch (currentState) {
         case AnimationState.DISPLAY:
@@ -377,10 +377,9 @@ const Header: React.FC = () => {
     }
 
     const handleResize = () => {
-      if (canvas && container) {
-        canvas.width = container.clientWidth;
-        canvas.height = container.clientHeight;
-      }
+      if (!canvas || !container) return;
+      canvas.width = container.clientWidth;
+      canvas.height = container.clientHeight;
     };
 
     handleResize();
