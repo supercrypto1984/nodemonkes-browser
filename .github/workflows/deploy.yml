@@ -25,16 +25,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          
+      
+      # Force a clean install to generate lock file
       - name: Install dependencies
-        # Run regular npm install first to generate package-lock.json if it doesn't exist
         run: |
-          if [ ! -f package-lock.json ]; then
-            npm install
-          else
-            npm ci
-          fi
+          rm -f package-lock.json
+          npm install
         
       - name: Build
         run: npm run build
