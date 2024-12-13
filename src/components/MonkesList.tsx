@@ -59,10 +59,15 @@ const MonkesList: React.FC = () => {
     currentPage * ITEMS_PER_PAGE
   );
 
+  const bodyTypes = monkes
+  .map(m => m.attributes?.Body || m.body)
+  .filter((body): body is string => body !== undefined)
+  .sort();
+
   return (
     <div className="monkes-list">
       <h2>All Monkes</h2>
-      <SearchBar onSearch={handleSearch} bodyTypes={[...new Set(monkes.map(m => m.attributes?.Body || m.body))]} />
+      <SearchBar onSearch={handleSearch} bodyTypes={bodyTypes} />
       <table>
         <thead>
           <tr>
