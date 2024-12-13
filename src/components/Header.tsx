@@ -28,12 +28,15 @@ const AnimationState = {
 
 const Header: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    if (!canvas || !container) return;
+    if (!canvas || !container) {
+      console.error('Canvas or container not found');
+      return;
+    }
 
     const ctx = canvas.getContext('2d', { 
       willReadFrequently: true,
@@ -209,6 +212,7 @@ const Header: React.FC = () => {
     }
 
     async function loadNextImage() {
+      if (!container) return null;
       const index = Math.floor(Math.random() * 10000);
       const baseId = '0000077c4851b026f4d19c25bf80de7b5b44b856da50d67ae8da304bd3be6999i';
       const imageUrl = `https://ordinals.com/content/${baseId}${index}`;
@@ -284,7 +288,7 @@ const Header: React.FC = () => {
       const currentTime = Date.now();
       const stateTime = currentTime - stateStartTime;
 
-      if (!ctx || !canvas || !container) return; //Added null check
+      if (!ctx || !canvas || !container) return; 
 
       if (!currentImage) {
         preloadImages().then(() => {
@@ -298,9 +302,9 @@ const Header: React.FC = () => {
         return;
       }
 
-      const size = calculateOptimalSize(container?.clientHeight ?? 168); //Updated size calculation
-      const containerWidth = container?.clientWidth ?? window.innerWidth; //Updated size calculation
-      const movementWidth = containerWidth - size.width; //Added movementWidth calculation
+      const size = calculateOptimalSize(container?.clientHeight ?? 168); 
+      const containerWidth = container?.clientWidth ?? window.innerWidth; 
+      const movementWidth = containerWidth - size.width; 
 
       switch (currentState) {
         case AnimationState.DISPLAY:
