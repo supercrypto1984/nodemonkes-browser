@@ -8,6 +8,7 @@ export interface Monke {
     Count: number;
     [key: string]: any;
   };
+  body?: string; // Add this line
   rank?: number;
   inscription: number;
   block: number;
