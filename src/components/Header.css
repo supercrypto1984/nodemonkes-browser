@@ -1,0 +1,26 @@
+.header {
+  height: 170px;
+  position: relative;
+  background-color: #000000;
+  border-bottom: 1px solid #333;
+}
+
+.animation-viewport {
+  position: absolute;
+  height: 168px;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+
+#animationCanvas {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 100%;
+}
+
