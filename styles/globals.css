@@ -107,10 +107,6 @@ td {
   background: #1a1a1a;
 }
 
-tr:nth-child(even) td {
-  background: #222;
-}
-
 /* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 80px; } /* # */
 th:nth-child(2), td:nth-child(2) { width: 100px; } /* NODEMONKE */
@@ -255,4 +251,3 @@ th:nth-child(8), td:nth-child(8) { width: auto; } /* SCRIPT PUBKEY */
     height: 80px;
   }
 }
-
