@@ -1,118 +1,174 @@
 .monkes-container {
-  padding: 20px;
-  background-color: #1a1a1a;
-  min-height: 100vh;
+    padding: 10px;
+    background-color: #1E1E1E;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
 }
 
-.monkes-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #1a1a1a;
-  color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+h2 { 
+    font-size: 28px; 
+    margin: 10px 0;
+    color: #FFFFFF;
+    font-weight: 600;
 }
 
-.monkes-table th {
-  background: #2a2a2a;
-  padding: 12px;
-  text-align: left;
-  font-weight: normal;
-  border-bottom: 1px solid #333;
+.table-container {
+    background: #2D2D2D;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-x: auto;
 }
 
-.monkes-table td {
-  padding: 12px;
-  border-bottom: 1px solid #333;
-  vertical-align: top;
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    table-layout: fixed;
 }
 
-.monke-row:nth-child(even) {
-  background: #222;
+th, td { 
+    border: 1px solid #3D3D3D; 
+    padding: 8px; 
+    text-align: left;
+    vertical-align: top;
+    background: #2D2D2D;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 400;
 }
 
-.id-cell {
-  font-family: monospace;
-  font-size: 14px;
-  text-align: center;
+th { 
+    background: #3D3D3D; 
+    position: sticky;
+    top: 0;
+    font-weight: 600;
+    z-index: 1;
+    font-size: 18px;
 }
 
-.image-cell {
-  width: 100px;
+td {
+    overflow: hidden;
+    word-wrap: break-word;
 }
 
-.monke-image {
-  width: 100px;
-  height: 100px;
-  image-rendering: pixelated;
-  background: #2a2a2a;
-  border-radius: 4px;
+tr { 
+    height: 180px;
 }
 
-.color-cell {
-  width: 30px;
-  padding: 12px 20px !important;
+thead tr {
+    height: 40px;
 }
 
-.color-bar {
-  width: 30px;
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 4px;
-  overflow: hidden;
-}
+th:nth-child(1), td:nth-child(1) { width: 50px; }
+th:nth-child(2), td:nth-child(2) { width: 100px; } 
+th:nth-child(3), td:nth-child(3) { width: 60px; } 
+th:nth-child(4), td:nth-child(4) { width: 200px; } 
+th:nth-child(5), td:nth-child(5) { width: 60px; }
+th:nth-child(6), td:nth-child(6) { width: 100px; }
+th:nth-child(7), td:nth-child(7) { width: 80px; }
+th:nth-child(8), td:nth-child(8) { width: 200px; }
 
-.color-bar.loading {
-  background: #2a2a2a;
+.color-bar { 
+    width: 30px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto;
 }
 
 .color-segment {
-  flex: 1;
-  width: 100%;
+    width: 100%;
+    flex: 1;
 }
 
-.traits-cell {
-  min-width: 200px;
+.monke-image {
+    image-rendering: pixelated;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 4px;
+    background-color: rgb(151, 123, 182);
 }
 
-.trait {
-  background: #2a2a2a;
-  padding: 6px 8px;
-  margin-bottom: 4px;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 14px;
+.script-pubkey {
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+    background: #3D3D3D;
+    padding: 8px;
+    border-radius: 4px;
+    font-weight: 500;
 }
 
-.trait:last-child {
-  margin-bottom: 0;
+.traits-list {
+    display: flex;
+    flex-direction: column; 
+    gap: 4px;
 }
 
-.rank-cell,
-.inscription-cell,
-.block-cell {
-  font-family: monospace;
-  font-size: 14px;
-  text-align: center;
-  white-space: nowrap;
+.trait-item {
+    background: #3D3D3D;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-family: monospace;
+    color: #FFFFFF;
+    font-weight: 500;
 }
 
-.script-cell {
-  font-family: monospace;
-  font-size: 14px;
-  word-break: break-all;
-  white-space: pre-wrap;
+.trait-item.rare {
+    color: #ff4444; 
+    font-weight: 600;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  color: #666;
+.monke-image.error {
+    display: none;
+}
+
+td:nth-child(5),
+td:nth-child(6),
+td:nth-child(7) {
+    font-family: monospace;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.color-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.color-count {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #FFFFFF;
+}
+
+.color-cell {
+    text-align: center;
+    padding: 4px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loading, .error {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
 }
 
 .error {
-  text-align: center;
-  padding: 40px;
-  color: #ff4444;
+    color: #ff4444;
 }
 
