@@ -1,9 +1,9 @@
-// This file will contain the animation logic from the upper.html
-// Due to its complexity, I'll provide a simplified version here
-
 export function initializeAnimation(canvas: HTMLCanvasElement) {
   const ctx = canvas.getContext('2d');
-  if (!ctx) return;
+  if (!ctx) {
+    console.error('Could not get canvas context');
+    return;
+  }
 
   // Animation parameters
   const PARAMS = {
@@ -22,6 +22,9 @@ export function initializeAnimation(canvas: HTMLCanvasElement) {
 
   let currentState = AnimationState.ENTRANCE;
   let frame = 0;
+
+  // Now TypeScript knows ctx is not null
+  ctx.imageSmoothingEnabled = false;
 
   function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
