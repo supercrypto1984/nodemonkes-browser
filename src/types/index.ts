@@ -26,4 +26,3 @@ export interface ColorInfo {
   b: number;
   count: number;
 }
-
