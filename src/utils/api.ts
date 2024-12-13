@@ -1,14 +1,13 @@
 export interface Monke {
   id: number;
   attributes: {
+    [key: string]: string | number;
     Body: string;
     Eyes: string;
     Earring: string;
     Head: string;
     Count: number;
-    [key: string]: any;
   };
-  body?: string; // Add this line
   rank?: number;
   inscription: number;
   block: number;
