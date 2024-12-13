@@ -46,4 +46,3 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
 };
 
 export default SearchBar;
-
