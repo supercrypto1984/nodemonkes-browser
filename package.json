@@ -1,0 +1,13 @@
+{
+  "name": "nodemonkes-browser",
+  "version": "1.0.0",
+  "description": "A browser-based Node.js REPL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SuperCrypto1984",
+  "license": "ISC",
+  "homepage": "https://supercrypto1984.github.io/nodemonkes-browser"
+}
+
