@@ -1,65 +1,48 @@
-/* Existing styles remain... */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
 
 .monkes-container {
+  padding: 20px;
+}
+
+.monkes-table {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  border-collapse: collapse;
 }
 
-.monkes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.monkes-table th,
+.monkes-table td {
+  padding: 10px;
+  border: 1px solid #333;
+  text-align: left;
 }
 
-.monke-card {
-  background: #1a1a1a;
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.2s;
-}
-
-.monke-card:hover {
-  transform: translateY(-5px);
+.monkes-table th {
+  background-color: #2a2a2a;
 }
 
 .monke-image {
-  width: 100%;
-  aspect-ratio: 1;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  display: block;
 }
 
-.monke-info {
-  padding: 12px;
-}
-
-.monke-id {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.monke-traits {
-  font-size: 0.9em;
-  color: #888;
+.color-analysis {
+  width: 20px;
+  height: 100px;
+  background: linear-gradient(to bottom, #ff0000, #00ff00, #0000ff);
 }
 
 .trait {
-  margin: 4px 0;
+  margin-bottom: 5px;
 }
 
-.loading {
-  text-align: center;
-  padding: 40px;
-  font-size: 1.2em;
-}
-
-.error {
-  color: #ff4444;
-  text-align: center;
-  padding: 40px;
+.trait:last-child {
+  margin-bottom: 0;
 }
 
