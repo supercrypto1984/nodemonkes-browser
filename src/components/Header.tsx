@@ -284,6 +284,8 @@ const Header: React.FC = () => {
       const currentTime = Date.now();
       const stateTime = currentTime - stateStartTime;
 
+      if (!ctx || !canvas || !container) return; //Added null check
+
       if (!currentImage) {
         preloadImages().then(() => {
           currentImage = getNextImageFromQueue();
@@ -296,8 +298,9 @@ const Header: React.FC = () => {
         return;
       }
 
-      const size = calculateOptimalSize(container?.clientHeight ?? 168);
-      const containerWidth = container?.clientWidth ?? window.innerWidth;
+      const size = calculateOptimalSize(container?.clientHeight ?? 168); //Updated size calculation
+      const containerWidth = container?.clientWidth ?? window.innerWidth; //Updated size calculation
+      const movementWidth = containerWidth - size.width; //Added movementWidth calculation
 
       switch (currentState) {
         case AnimationState.DISPLAY:
