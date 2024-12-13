@@ -1,0 +1,111 @@
+.monkes-list {
+  padding: 20px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.search-container {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #2a2a2a;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.monkes-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1a1a1a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.monkes-table th,
+.monkes-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.monkes-table th {
+  background: #2a2a2a;
+  font-weight: normal;
+  color: #fff;
+}
+
+.monke-image {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.color-cell {
+  text-align: center;
+}
+
+.color-bar {
+  width: 30px;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.color-count {
+  font-family: monospace;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.traits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trait-item {
+  background: #2a2a2a;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.trait-item.rare {
+  color: #ff4444;
+}
+
+.script-pubkey {
+  font-family: monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: #2a2a2a;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .monke-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
