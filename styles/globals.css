@@ -1,0 +1,258 @@
+/* Base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styles */
+.header-container {
+  background-color: #000000;
+  height: 168px;
+  position: relative;
+  border-bottom: 1px solid #333;
+}
+
+/* Content styles */
+.content-container {
+  flex: 1;
+  background-color: #1a1a1a;
+  padding: 20px;
+}
+
+/* MonkesList styles */
+.monkes-container {
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.controls {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #2a2a2a;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.body-select {
+  padding: 8px 12px;
+  background: #333;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+  min-width: 150px;
+  font-size: 14px;
+}
+
+.search-input {
+  padding: 8px 12px;
+  background: #333;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+  width: 200px;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 8px 16px;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-button:hover {
+  background: #555;
+}
+
+/* Table styles */
+.table-container {
+  background: #1a1a1a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th {
+  background: #2a2a2a;
+  padding: 12px;
+  text-align: left;
+  font-weight: normal;
+  color: #fff;
+  border-bottom: 1px solid #333;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  background: #1a1a1a;
+}
+
+tr:nth-child(even) td {
+  background: #222;
+}
+
+/* Column widths */
+th:nth-child(1), td:nth-child(1) { width: 80px; } /* # */
+th:nth-child(2), td:nth-child(2) { width: 100px; } /* NODEMONKE */
+th:nth-child(3), td:nth-child(3) { width: 60px; } /* COLOR */
+th:nth-child(4), td:nth-child(4) { width: 200px; } /* TRAITS */
+th:nth-child(5), td:nth-child(5) { width: 80px; } /* RANK */
+th:nth-child(6), td:nth-child(6) { width: 120px; } /* INSCRIPTION # */
+th:nth-child(7), td:nth-child(7) { width: 120px; } /* BLOCK HEIGHT */
+th:nth-child(8), td:nth-child(8) { width: auto; } /* SCRIPT PUBKEY */
+
+/* NODEMONKE image */
+.monke-image {
+  width: 100px;
+  height: 100px;
+  image-rendering: pixelated;
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+/* Color analysis */
+.color-cell {
+  text-align: center;
+}
+
+.color-bar {
+  width: 30px;
+  height: 120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.color-count {
+  font-family: monospace;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.color-segment {
+  width: 100%;
+}
+
+/* Traits styling */
+.traits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trait-item {
+  background: #2a2a2a;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #fff;
+}
+
+.trait-item.rare {
+  color: #ff4444;
+}
+
+/* Monospace cells */
+.id-cell,
+.rank-cell,
+.inscription-cell,
+.block-cell {
+  font-family: monospace;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Script pubkey styling */
+.script-cell {
+  font-family: monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #fff;
+  background: #2a2a2a;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  padding: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pagination button:disabled {
+  background: #222;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Loading states */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-container {
+    padding: 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .body-select,
+  .search-input {
+    width: 100%;
+  }
+
+  .monke-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
