@@ -38,6 +38,16 @@ th, td {
   padding: 8px;
 }
 
+/* 设置表头行高 */
+thead tr {
+  height: 48px !important;
+}
+
+/* 设置内容行高 */
+tbody tr { 
+  height: 180px;
+}
+
 /* 移除图片单元格的内边距并设置为正方形 */
 td:nth-child(2) {
   padding: 0;
@@ -52,14 +62,6 @@ th {
   font-weight: 600;
   z-index: 1;
   font-size: 18px;
-}
-
-tr { 
-  height: 180px;
-}
-
-thead tr {
-  height: 40px;
 }
 
 /* Column widths */
@@ -92,8 +94,8 @@ th:nth-child(8), td:nth-child(8) { width: 200px; }
 }
 
 .monke-image {
-  width: 100%;
-  height: 100%;
+  width: 180px;
+  height: 180px;
   image-rendering: pixelated;
   display: block;
   border-radius: 4px;
