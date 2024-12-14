@@ -6,10 +6,14 @@ import './MonkeItem.css';
 
 interface MonkeItemProps {
   monke: Monke;
+  index: number; // Add index prop to determine if image is above fold
 }
 
-const MonkeItem: React.FC<MonkeItemProps> = ({ monke }) => {
+const MonkeItem: React.FC<MonkeItemProps> = ({ monke, index }) => {
   const imageUrl = `https://raw.githubusercontent.com/supercrypto1984/nodemonkes-gallery/main/images/${monke.id}.png`;
+  
+  // Only use lazy loading for images below the first 3 rows
+  const shouldLazyLoad = index >= 3;
 
   const handleImageLoad = async (event: React.SyntheticEvent<HTMLImageElement>) => {
     const img = event.target as HTMLImageElement;
@@ -43,7 +47,7 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke }) => {
           src={imageUrl} 
           alt={`Nodemonke ${monke.id}`}
           className="monke-image"
-          loading="lazy"
+          loading={shouldLazyLoad ? "lazy" : "eager"}
           onLoad={handleImageLoad}
           onError={(e) => (e.currentTarget.classList.add('error'))}
         />
