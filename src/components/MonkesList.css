@@ -38,11 +38,11 @@ th, td {
   padding: 8px;
 }
 
-/* 移除图片单元格的内边距 */
+/* 移除图片单元格的内边距并设置为正方形 */
 td:nth-child(2) {
   padding: 0;
-  width: 168px; /* 28px * 6 = 168px */
-  height: 168px;
+  width: 100px;
+  height: 100px;
 }
 
 th { 
@@ -55,7 +55,7 @@ th {
 }
 
 tr { 
-  height: 168px; /* 保持与图片单元格相同的高度 */
+  height: 100px;
 }
 
 thead tr {
@@ -64,7 +64,11 @@ thead tr {
 
 /* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 50px; }
-th:nth-child(2), td:nth-child(2) { width: 168px; } /* 修改为与高度相同 */
+th:nth-child(2), td:nth-child(2) { 
+  width: 100px; 
+  height: 100px;
+  padding: 0; 
+}
 th:nth-child(3), td:nth-child(3) { width: 60px; } 
 th:nth-child(4), td:nth-child(4) { width: 200px; } 
 th:nth-child(5), td:nth-child(5) { width: 60px; }
@@ -88,8 +92,8 @@ th:nth-child(8), td:nth-child(8) { width: 200px; }
 }
 
 .monke-image {
-  width: 168px; /* 28px * 6 = 168px */
-  height: 168px;
+  width: 100%;
+  height: 100%;
   image-rendering: pixelated;
   display: block;
   border-radius: 4px;
