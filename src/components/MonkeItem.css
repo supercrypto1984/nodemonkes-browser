@@ -8,13 +8,21 @@
   vertical-align: top;
 }
 
-.monke-image {
+.monke-image-cell {
   width: 100px;
   height: 100px;
+  padding: 0 !important;
+  position: relative;
+}
+
+.monke-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   image-rendering: pixelated;
-  background: #2a2a2a;
-  border-radius: 4px;
   display: block;
+  border-radius: 4px;
+  background-color: rgb(151, 123, 182);
 }
 
 .color-cell {
