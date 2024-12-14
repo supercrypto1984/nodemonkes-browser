@@ -38,7 +38,7 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke }) => {
   return (
     <tr className="monke-item">
       <td className="monke-id">{monke.id}</td>
-      <td>
+      <td className="monke-image-cell">
         <img 
           src={imageUrl} 
           alt={`Nodemonke ${monke.id}`}
