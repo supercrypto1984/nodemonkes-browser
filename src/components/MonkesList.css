@@ -45,7 +45,7 @@ thead tr {
 
 /* 设置内容行高 */
 tbody tr { 
-  height: 50px;
+  height: 60px;
 }
 
 /* 移除图片单元格的内边距并设置为正方形 */
@@ -77,7 +77,6 @@ th:nth-child(5), td:nth-child(5) { width: 60px; }
 th:nth-child(6), td:nth-child(6) { width: 100px; }
 th:nth-child(7), td:nth-child(7) { width: 100px; }
 th:nth-child(8), td:nth-child(8) { width: 200px; }
-
 
 .color-bar { 
   width: 30px;
@@ -185,5 +184,86 @@ td:nth-child(7) {
 .monke-image-cell {
   width: 180px;
   height: 180px;
+}
+
+/* 移动设备自适应布局 */
+@media screen and (max-width: 768px) {
+  .monkes-container {
+    padding: 5px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .table-container {
+    padding: 5px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 5px;
+  }
+
+  /* 隐藏某些列以适应小屏幕 */
+  th:nth-child(3), td:nth-child(3),
+  th:nth-child(5), td:nth-child(5),
+  th:nth-child(7), td:nth-child(7),
+  th:nth-child(8), td:nth-child(8) {
+    display: none;
+  }
+
+  /* 调整剩余列的宽度 */
+  th:nth-child(1), td:nth-child(1) { width: 40px; }
+  th:nth-child(2), td:nth-child(2) { 
+    width: 100px; 
+    height: 100px;
+  }
+  th:nth-child(4), td:nth-child(4) { width: 120px; }
+  th:nth-child(6), td:nth-child(6) { width: 80px; }
+
+  .monke-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .monke-image-cell {
+    width: 100px;
+    height: 100px;
+  }
+
+  .color-bar {
+    width: 20px;
+    height: 80px;
+  }
+
+  .trait-item {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .script-pubkey {
+    font-size: 12px;
+  }
+}
+
+/* 更小屏幕的额外调整 */
+@media screen and (max-width: 480px) {
+  th:nth-child(6), td:nth-child(6) {
+    display: none;
+  }
+
+  th:nth-child(2), td:nth-child(2) { 
+    width: 80px; 
+    height: 80px;
+  }
+
+  .monke-image, .monke-image-cell {
+    width: 80px;
+    height: 80px;
+  }
 }
 
