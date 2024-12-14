@@ -84,8 +84,8 @@ const MonkesList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {pageMonkes.map(monke => (
-              <MonkeItem key={monke.id} monke={monke} />
+            {pageMonkes.map((monke, index) => (
+              <MonkeItem key={monke.id} monke={monke} index={index} />
             ))}
           </tbody>
         </table>
