@@ -40,12 +40,12 @@ th, td {
 
 /* 设置表头行高 */
 thead tr {
-  height: 48px !important;
+  height: 40px !important; /* 降低表头高度 */
 }
 
 /* 设置内容行高 */
 tbody tr { 
-  height: 180px;
+  height: 60px;
 }
 
 /* 移除图片单元格的内边距并设置为正方形 */
@@ -67,8 +67,7 @@ th {
 /* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 50px; }
 th:nth-child(2), td:nth-child(2) { 
-  width: 180px;
-  height: 180px;
+  width: 180px; 
   padding: 0; 
 }
 th:nth-child(3), td:nth-child(3) { width: 60px; } 
@@ -179,5 +178,10 @@ td:nth-child(7) {
 
 .error {
   color: #ff4444;
+}
+
+.monke-image-cell {
+  width: 180px;
+  height: 180px;
 }
 
