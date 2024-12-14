@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -9,6 +9,14 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bodyType, setBodyType] = useState('all');
+
+  // 监听 searchTerm 的变化
+  useEffect(() => {
+    // 当搜索词为空时自动触发搜索
+    if (searchTerm === '') {
+      onSearch('', bodyType);
+    }
+  }, [searchTerm, bodyType, onSearch]);
 
   const handleSearch = () => {
     onSearch(searchTerm, bodyType);
@@ -24,7 +32,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
     <div className="search-container">
       <select 
         value={bodyType}
-        onChange={(e) => setBodyType(e.target.value)}
+        onChange={(e) => {
+          setBodyType(e.target.value);
+          onSearch(searchTerm, e.target.value);
+        }}
         aria-label="Filter by body type"
       >
         <option value="all">All Monkes</option>
@@ -46,3 +57,4 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
 };
 
 export default SearchBar;
+
