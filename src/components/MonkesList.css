@@ -41,8 +41,8 @@ th, td {
 /* 移除图片单元格的内边距并设置为正方形 */
 td:nth-child(2) {
   padding: 0;
-  width: 100px;
-  height: 100px;
+  width: 180px; /* 28px * 6 = 168px */
+  height: 180px;
 }
 
 th { 
@@ -55,7 +55,7 @@ th {
 }
 
 tr { 
-  height: 100px;
+  height: 180px; /* 确保行高与图片单元格高度一致 */
 }
 
 thead tr {
@@ -65,8 +65,8 @@ thead tr {
 /* Column widths */
 th:nth-child(1), td:nth-child(1) { width: 50px; }
 th:nth-child(2), td:nth-child(2) { 
-  width: 100px; 
-  height: 100px;
+  width: 180px;
+  height: 180px;
   padding: 0; 
 }
 th:nth-child(3), td:nth-child(3) { width: 60px; } 
