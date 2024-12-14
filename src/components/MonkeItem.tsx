@@ -82,4 +82,3 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke }) => {
 };
 
 export default MonkeItem;
-
