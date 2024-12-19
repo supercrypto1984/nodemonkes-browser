@@ -63,6 +63,10 @@ th {
   z-index: 1;
   font-size: 18px;
   white-space: nowrap;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  padding: 0 12px;
 }
 
 /* Column widths */
