@@ -17,6 +17,6 @@ export function formatScriptPubkey(pubkey: string): string {
 
 export function calculatePercentage(count: number): string {
   const TOTAL_MONKES = 10000;
-  return ((count / TOTAL_MONKES) * 100).toFixed(1);
+  return ((count / TOTAL_MONKES) * 100).toFixed(2);
 }
 
