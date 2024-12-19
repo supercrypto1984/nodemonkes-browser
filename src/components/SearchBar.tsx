@@ -11,9 +11,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bodyType, setBodyType] = useState('all');
 
-  // 监听 searchTerm 的变化
   useEffect(() => {
-    // 当搜索词为空时自动触发搜索
     if (searchTerm === '') {
       onSearch('', bodyType);
     }
