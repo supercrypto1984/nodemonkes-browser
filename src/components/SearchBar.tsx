@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './SearchBar.css';
+import { Camera } from 'lucide-react';
 
 interface SearchBarProps {
   onSearch: (searchTerm: string, bodyType: string) => void;
@@ -52,6 +53,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, bodyTypes }) => {
         aria-label="Search by ID or Inscription"
       />
       <button onClick={handleSearch}>Search</button>
+      <a 
+        href="https://supercrypto1984.github.io/nodemonkes-gif/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="gif-tool-link"
+      >
+        <Camera className="gif-icon" />
+        <span>Make GIF</span>
+      </a>
     </div>
   );
 };
