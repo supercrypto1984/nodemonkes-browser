@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import './Header.css';
+import { Camera } from 'lucide-react';
 
 const PARAMS = {
   frameCount: 36,
@@ -404,6 +405,15 @@ const Header: React.FC = () => {
 
   return (
     <div className="header-container" ref={containerRef}>
+      <a 
+        href="https://supercrypto1984.github.io/nodemonkes-gif/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="gif-tool-link"
+      >
+        <Camera className="gif-icon" />
+        <span>Make GIF</span>
+      </a>
       <div className="animation-viewport">
         <canvas ref={canvasRef} id="animationCanvas"></canvas>
       </div>
