@@ -38,3 +38,38 @@
     background: #5D5D5D;
 }
 
+.gif-tool-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #4D4D4D;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.gif-tool-link:hover {
+  background: #5D5D5D;
+}
+
+.gif-icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-container {
+    flex-wrap: wrap;
+  }
+  
+  .gif-tool-link {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
