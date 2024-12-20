@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Header.css';
 
 const PARAMS = {
@@ -20,6 +20,7 @@ const PARAMS = {
 };
 
 const AnimationState = {
+  LOADING: 'loading',
   DISPLAY: 'display',
   NOD: 'nod',
   EXIT: 'exit',
@@ -29,6 +30,7 @@ const AnimationState = {
 const Header: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null!);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,7 +49,7 @@ const Header: React.FC = () => {
     ctx.imageSmoothingEnabled = false;
 
     let animationFrameId: number;
-    let currentState = AnimationState.ENTRANCE;
+    let currentState = AnimationState.LOADING;
     let stateStartTime = 0;
     let currentImage: any = null;
     let nextImage: any = null;
@@ -284,20 +286,33 @@ const Header: React.FC = () => {
       }
     }
 
+    async function initializeAnimation() {
+      // Load first image and wait for it to be ready
+      const firstImage = await loadNextImage();
+      if (firstImage) {
+        currentImage = firstImage;
+        setIsInitialized(true);
+        currentState = AnimationState.ENTRANCE;
+        stateStartTime = Date.now();
+        // Start preloading next images after first one is ready
+        preloadImages();
+      }
+    }
+
     function animate() {
       const currentTime = Date.now();
       const stateTime = currentTime - stateStartTime;
 
       if (!ctx || !canvas || !container) return; 
 
+      if (currentState === AnimationState.LOADING) {
+        // Don't render anything during loading
+        animationFrameId = requestAnimationFrame(animate);
+        return;
+      }
+
       if (!currentImage) {
-        preloadImages().then(() => {
-          currentImage = getNextImageFromQueue();
-          if (currentImage) {
-            stateStartTime = currentTime;
-            currentState = AnimationState.ENTRANCE;
-          }
-        });
+        // Don't start animation until we have an image
         animationFrameId = requestAnimationFrame(animate);
         return;
       }
@@ -392,6 +407,8 @@ const Header: React.FC = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
+    // Initialize animation only once
+    initializeAnimation();
     animate();
 
     return () => {
@@ -406,6 +423,11 @@ const Header: React.FC = () => {
     <div className="header-container" ref={containerRef}>
       <div className="animation-viewport">
         <canvas ref={canvasRef} id="animationCanvas"></canvas>
+        {!isInitialized && (
+          <div className="loading-overlay">
+            <span>Loading...</span>
+          </div>
+        )}
       </div>
     </div>
   );
