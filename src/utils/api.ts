@@ -1,6 +1,6 @@
 import type { Monke, ColorInfo } from "../types"
 
-const JSON_URL = "https://raw.githubusercontent.com/supercrypto1984/nodemonkes-gallery/refs/heads/main/nodemonkes_data.json"
+const JSON_URL = "https://pub-ce8a03b190984a3d99332e13b7d5e3cb.r2.dev/transformed_metadata.json"
 
 export async function fetchMonkes(): Promise<Monke[]> {
   try {
