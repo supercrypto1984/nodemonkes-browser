@@ -1,29 +1,31 @@
 export interface MonkeAttributes {
-  [key: string]: string | number;
-  Body: string;
-  Eyes: string;
-  Earring: string;
-  Head: string;
-  Count: number;
-  BodyCount: number;
-  EyesCount: number;
-  EarringCount: number;
-  HeadCount: number;
+  [key: string]: string | number
+  Body?: string
+  Eyes?: string
+  Earring?: string
+  Head?: string
+  Count?: number
+  BodyCount?: number
+  EyesCount?: number
+  EarringCount?: number
+  HeadCount?: number
 }
 
 export interface Monke {
-  id: number;
-  attributes: MonkeAttributes;
-  rank?: number;
-  inscription: number;
-  block: number;
-  scriptPubkey: string;
+  id: number
+  attributes: MonkeAttributes
+  rank?: number
+  inscription: number
+  block: number
+  scriptPubkey?: string
+  script_pubkey?: string // 备用字段名
+  pubkey?: string // 备用字段名
+  address?: string // 备用字段名
 }
 
 export interface ColorInfo {
-  r: number;
-  g: number;
-  b: number;
-  count: number;
+  r: number
+  g: number
+  b: number
+  count: number
 }
-
