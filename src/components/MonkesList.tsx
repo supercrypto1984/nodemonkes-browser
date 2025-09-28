@@ -25,10 +25,12 @@ const MonkesList: React.FC = () => {
       try {
         console.log("Loading monkes data...")
         const data = await fetchMonkes()
-        console.log("Loaded data:", data)
+        console.log("Loaded data sample:", data.slice(0, 2))
 
         // 确保数据是数组格式
         const monkesArray = Array.isArray(data) ? data : []
+        console.log(`Total monkes loaded: ${monkesArray.length}`)
+
         setAllMonkes(monkesArray)
         setFilteredMonkes(monkesArray)
         setLoading(false)
@@ -101,6 +103,19 @@ const MonkesList: React.FC = () => {
         </table>
       </div>
       <Pagination currentPage={currentPage} totalPages={pageCount} onPageChange={setCurrentPage} />
+
+      {/* 调试信息 */}
+      {process.env.NODE_ENV === "development" && (
+        <div style={{ marginTop: "20px", padding: "10px", background: "#333", fontSize: "12px" }}>
+          <p>Debug Info:</p>
+          <p>Total Monkes: {allMonkes.length}</p>
+          <p>Filtered Monkes: {filteredMonkes.length}</p>
+          <p>
+            Current Page: {currentPage}/{pageCount}
+          </p>
+          {pageMonkes.length > 0 && <p>Sample ScriptPubkey: {pageMonkes[0].scriptPubkey || "Not found"}</p>}
+        </div>
+      )}
     </div>
   )
 }
