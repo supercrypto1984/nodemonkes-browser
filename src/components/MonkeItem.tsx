@@ -24,14 +24,15 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke, index }) => {
 
     try {
       const colors = await getImageColors(imageUrl)
+      const topColors = colors.slice(0, 5) // 只取前5种颜色
       const colorBarHtml = `
         <div class="color-cell">
-          <div class="color-count">${colors.length}</div>
+          <div class="color-count">${topColors.length}</div>
           <div class="color-bar">
-            ${colors
+            ${topColors
               .map(
                 (color) =>
-                  `<div class="color-segment" style="background-color: rgb(${color.r},${color.g},${color.b});"></div>`,
+                  `<div class="color-segment" style="background-color: rgb(${color.r},${color.g},${color.b}); flex: ${color.count};"></div>`,
               )
               .join("")}
           </div>
@@ -45,6 +46,9 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke, index }) => {
 
   // 安全地处理属性
   const safeAttributes = monke.attributes || {}
+
+  // 调试输出
+  console.log(`Monke ${monke.id} scriptPubkey:`, monke.scriptPubkey)
 
   return (
     <tr className="monke-item">
@@ -61,7 +65,7 @@ const MonkeItem: React.FC<MonkeItemProps> = ({ monke, index }) => {
       </td>
       <td id={`color-bar-${monke.id}`}>
         <div className="color-cell">
-          <div className="color-count">Loading...</div>
+          <div class="color-count">Loading...</div>
         </div>
       </td>
       <td>
