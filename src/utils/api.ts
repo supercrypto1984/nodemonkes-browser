@@ -4,15 +4,55 @@ const JSON_URL = "https://metadata.138148178.xyz/metadata.json"
 
 export async function fetchMonkes(): Promise<Monke[]> {
   try {
-    const response = await fetch(JSON_URL)
+    console.log("Fetching monkes data from:", JSON_URL)
+    const response = await fetch(JSON_URL, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+
+    console.log("Response status:", response.status)
+
     if (!response.ok) {
-      throw new Error("Failed to fetch monkes data")
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
+
     const data = await response.json()
-    return data.nodemonkes || data
+    console.log("Raw data structure:", data)
+
+    // 处理不同的数据结构
+    let monkesData = data
+    if (data.nodemonkes) {
+      monkesData = data.nodemonkes
+    } else if (data.data) {
+      monkesData = data.data
+    } else if (Array.isArray(data)) {
+      monkesData = data
+    }
+
+    console.log("Processed monkes data:", monkesData)
+
+    // 确保数据是数组并标准化字段名
+    const normalizedData = Array.isArray(monkesData) ? monkesData.map(normalizeMonkeData) : []
+
+    console.log("Normalized data sample:", normalizedData.slice(0, 2))
+    return normalizedData
   } catch (error) {
     console.error("Error fetching monkes:", error)
     throw error
+  }
+}
+
+// 标准化数据字段名
+function normalizeMonkeData(monke: any): Monke {
+  return {
+    id: monke.id || monke.ID || monke.number,
+    attributes: monke.attributes || monke.traits || {},
+    rank: monke.rank || monke.rarity_rank,
+    inscription: monke.inscription || monke.inscription_id || monke.inscriptionId,
+    block: monke.block || monke.block_height || monke.blockHeight,
+    scriptPubkey: monke.scriptPubkey || monke.script_pubkey || monke.pubkey || monke.address || monke.scriptpubkey,
   }
 }
 
