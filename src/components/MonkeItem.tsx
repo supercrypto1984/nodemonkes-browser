@@ -1,99 +1,111 @@
-import type React from "react"
-import type { Monke } from "../types"
-import { getImageColors } from "../utils/api"
-import { formatScriptPubkey, calculatePercentage } from "../utils/helpers"
-import "./MonkeItem.css"
+import type { Monke, ColorInfo } from "../types"
 
-interface MonkeItemProps {
-  monke: Monke
-  index: number
+const JSON_URL = "https://metadata.138148178.xyz/metadata.json"
+
+// 标准化数据字段名
+function normalizeMonkeData(monke: any): Monke {
+  return {
+    id: monke.id || monke.ID || monke.number,
+    attributes: monke.attributes || monke.traits || {},
+    rank: monke.rank || monke.rarity_rank,
+    inscription: monke.inscription || monke.inscription_id || monke.inscriptionId,
+    block: monke.block || monke.block_height || monke.blockHeight,
+    scriptPubkey: monke.scriptPubkey || monke.script_pubkey || monke.pubkey || monke.address || monke.scriptpubkey,
+  }
 }
 
-const MonkeItem: React.FC<MonkeItemProps> = ({ monke, index }) => {
-  // 安全地构建图片URL
-  const imageUrl = `https://raw.githubusercontent.com/supercrypto1984/nodemonkes-gallery/main/images/${monke.id || "default"}.png`
+export async function fetchMonkes(): Promise<Monke[]> {
+  try {
+    console.log("Fetching monkes data from:", JSON_URL)
+    const response = await fetch(JSON_URL, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
 
-  // Only use lazy loading for images below the first 3 rows
-  const shouldLazyLoad = index >= 3
+    console.log("Response status:", response.status)
 
-  const handleImageLoad = async (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const img = event.target as HTMLImageElement
-    const colorBarElement = document.getElementById(`color-bar-${monke.id}`)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
 
-    if (!colorBarElement) return
+    const data = await response.json()
+    console.log("Raw data structure:", data)
 
-    try {
-      const colors = await getImageColors(imageUrl)
-      const topColors = colors.slice(0, 5) // 只取前5种颜色
-      const colorBarHtml = `
-        <div class="color-cell">
-          <div class="color-count">${topColors.length}</div>
-          <div class="color-bar">
-            ${topColors
-              .map(
-                (color) =>
-                  `<div class="color-segment" style="background-color: rgb(${color.r},${color.g},${color.b}); flex: ${color.count};"></div>`,
-              )
-              .join("")}
-          </div>
-        </div>`
-      colorBarElement.innerHTML = colorBarHtml
-    } catch (error) {
-      console.error("Failed to analyze image colors:", error)
-      colorBarElement.innerHTML = '<div class="color-cell"><div class="color-count">Error</div></div>'
-    }
-  }
+    // 处理不同的数据结构
+    let monkesData = data
+    if (data.nodemonkes) {
+      monkesData = data.nodemonkes
+    } else if (data.data) {
+      monkesData = data.data
+    } else if (Array.isArray(data)) {
+      monkesData = data
+    }
 
-  // 安全地处理属性
-  const safeAttributes = monke.attributes || {}
+    console.log("Processed monkes data:", monkesData)
 
-  // 调试输出
-  console.log(`Monke ${monke.id} scriptPubkey:`, monke.scriptPubkey)
+    // 确保数据是数组并标准化字段名
+    const normalizedData = Array.isArray(monkesData) ? monkesData.map(normalizeMonkeData) : []
 
-  return (
-    <tr className="monke-item">
-      <td className="monke-id">{monke.id || "N/A"}</td>
-      <td className="monke-image-cell">
-        <img
-          src={imageUrl || "/placeholder.svg"}
-          alt={`Nodemonke ${monke.id || "Unknown"}`}
-          className="monke-image"
-          loading={shouldLazyLoad ? "lazy" : "eager"}
-          onLoad={handleImageLoad}
-          onError={(e) => e.currentTarget.classList.add("error")}
-        />
-      </td>
-      <td id={`color-bar-${monke.id}`}>
-        <div className="color-cell">
-          <div class="color-count">Loading...</div>
-        </div>
-      </td>
-      <td>
-        <div className="traits-list">
-          {Object.entries(safeAttributes)
-            .filter(([key]) => !key.endsWith("Count") && key !== "Count")
-            .map(([key, value]) => {
-              const countKey = `${key}Count` as keyof typeof safeAttributes
-              const count = safeAttributes[countKey] as number
-              const percentage = calculatePercentage(count)
-              const isRare = Number.parseFloat(percentage) < 1
-              return (
-                <div key={key} className={`trait-item ${isRare ? "rare" : ""}`}>
-                  {key}: {value || "N/A"} ({percentage}%)
-                </div>
-              )
-            })}
-          <div className="trait-item">Count: {safeAttributes.Count || 0}</div>
-        </div>
-      </td>
-      <td className="monke-rank">{monke.rank || "-"}</td>
-      <td className="monke-inscription">{monke.inscription || "N/A"}</td>
-      <td className="monke-block">{monke.block || "N/A"}</td>
-      <td>
-        <div className="script-pubkey">{formatScriptPubkey(monke.scriptPubkey)}</div>
-      </td>
-    </tr>
-  )
+    console.log("Normalized data sample:", normalizedData.slice(0, 2))
+    return normalizedData
+  } catch (error) {
+    console.error("Error fetching monkes:", error)
+    throw error
+  }
 }
 
-export default MonkeItem
+export async function getImageColors(imageUrl: string): Promise<ColorInfo[]> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = "anonymous"
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas")
+      const ctx = canvas.getContext("2d")
+      if (!ctx) {
+        reject(new Error("Could not get canvas context"))
+        return
+      }
+
+      canvas.width = img.width
+      canvas.height = img.height
+      ctx.drawImage(img, 0, 0)
+
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const pixels = imageData.data
+      const colorMap = new Map<string, number>()
+
+      // Analyze each pixel
+      for (let i = 0; i < pixels.length; i += 4) {
+        const r = pixels[i]
+        const g = pixels[i + 1]
+        const b = pixels[i + 2]
+        const a = pixels[i + 3]
+
+        // Skip transparent pixels
+        if (a === 0) continue
+
+        const colorKey = `${r},${g},${b}`
+        colorMap.set(colorKey, (colorMap.get(colorKey) || 0) + 1)
+      }
+
+      // Convert to array and sort by count
+      const colors = Array.from(colorMap.entries())
+        .map(([color, count]) => {
+          const [r, g, b] = color.split(",").map(Number)
+          return { r, g, b, count }
+        })
+        .sort((a, b) => b.count - a.count)
+
+      resolve(colors)
+    }
+
+    img.onerror = () => {
+      reject(new Error("Failed to load image"))
+    }
+
+    img.src = imageUrl
+  })
+}
