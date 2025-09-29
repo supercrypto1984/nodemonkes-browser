@@ -1,41 +1,41 @@
 .search-container {
-    background: #2D2D2D;
-    border-radius: 8px;
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 10px;
+  background: #2d2d2d;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .search-container select,
 .search-container input {
-    padding: 8px;
-    border: 1px solid #3D3D3D;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #FFFFFF;
-    background-color: #3D3D3D;
+  padding: 8px;
+  border: 1px solid #3d3d3d;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #3d3d3d;
 }
 
 .search-container input {
-    width: 150px;
+  width: 150px;
 }
 
 .search-container button {
-    padding: 8px 16px;
-    background: #4D4D4D;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 500;
-    transition: background-color 0.2s;
+  padding: 8px 16px;
+  background: #4d4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
 }
 
 .search-container button:hover {
-    background: #5D5D5D;
+  background: #5d5d5d;
 }
 
 .gif-tool-link {
@@ -43,7 +43,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: #4D4D4D;
+  background: #4d4d4d;
   border-radius: 4px;
   color: white;
   text-decoration: none;
@@ -53,10 +53,34 @@
 }
 
 .gif-tool-link:hover {
-  background: #5D5D5D;
+  background: #5d5d5d;
 }
 
 .gif-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Added styles for DIY NM button matching the Make GIF button */
+.diy-tool-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #4d4d4d;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.diy-tool-link:hover {
+  background: #5d5d5d;
+}
+
+.diy-icon {
   width: 16px;
   height: 16px;
 }
@@ -65,8 +89,15 @@
   .search-container {
     flex-wrap: wrap;
   }
-  
+
   .gif-tool-link {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Added mobile styles for DIY NM button */
+  .diy-tool-link {
     margin-top: 8px;
     width: 100%;
     justify-content: center;
